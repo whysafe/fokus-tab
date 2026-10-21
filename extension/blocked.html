@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сайт заблокирован — Фокус</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/blocked.css">
+</head>
+<body>
+  <main class="wrap">
+    <div class="badge"><span class="logo"></span> Фокус-вкладка</div>
+    <h1><span id="site">сайт</span> подождёт</h1>
+    <p class="lead muted">Сейчас время сосредоточиться. Сайт снова откроется, когда закончится фокус.</p>
+
+    <div class="countdown card">
+      <span class="muted">До конца фокуса</span>
+      <b id="left">—</b>
+    </div>
+
+    <figure class="quote">
+      <blockquote id="quote"></blockquote>
+      <figcaption id="author"></figcaption>
+    </figure>
+
+    <div class="actions">
+      <button id="back" class="btn btn-primary">Вернуться к работе</button>
+      <button id="allow" class="btn">Ещё 5 минут</button>
+    </div>
+    <p id="note" class="note muted"></p>
+  </main>
+  <script type="module" src="blocked.js"></script>
+</body>
+</html>

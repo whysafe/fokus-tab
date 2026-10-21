@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Фокус-вкладка: настройки и статистика</title>
+  <link rel="icon" href="icons/icon32.png">
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/options.css">
+</head>
+<body>
+  <header class="page-head">
+    <div class="brand"><span class="logo"></span><div><b>Фокус-вкладка</b><span class="muted">Настройки и статистика</span></div></div>
+    <span id="saved" class="saved muted" aria-live="polite"></span>
+  </header>
+
+  <main class="grid">
+    <section class="card stats">
+      <div class="section-head">
+        <h2>Статистика</h2>
+        <div class="seg" role="tablist">
+          <button class="active" data-metric="focusMin" role="tab">Фокус</button>
+          <button data-metric="blocked" role="tab">Блокировки</button>
+        </div>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><span>Сегодня в фокусе</span><b id="kTodayFocus">0 мин</b></div>
+        <div class="kpi"><span>За 7 дней</span><b id="kWeekFocus">0 мин</b></div>
+        <div class="kpi"><span>Сэкономлено ≈</span><b id="kSaved">0 мин</b></div>
+        <div class="kpi"><span>Попыток заблокировано</span><b id="kBlocked">0</b></div>
+      </div>
+      <svg id="chart" class="chart" viewBox="0 0 640 220" role="img" aria-label="График за 7 дней"></svg>
+      <div class="split">
+        <div>
+          <h3>Чаще всего тянуло на</h3>
+          <ol id="topSites" class="top-sites"></ol>
+        </div>
+        <div class="week-meta">
+          <h3>Неделя</h3>
+          <p><b id="kSessions">0</b> <span class="muted">полных помидоров</span></p>
+          <p class="muted small">Экономия считается как попытки × <span id="perDistraction">5</span> мин: столько обычно уходит на один «быстрый» заход.</p>
+          <button id="resetStats" class="btn small-btn">Сбросить статистику</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Блок-лист</h2>
+      <p class="muted small">Домен блокируется вместе с поддоменами: <code>youtube.com</code> закрывает и <code>m.youtube.com</code>.</p>
+      <form id="addForm" class="add-row">
+        <input id="newSite" type="text" placeholder="например, news.ycombinator.com" autocomplete="off" spellcheck="false">
+        <button class="btn btn-primary" type="submit">Добавить</button>
+      </form>
+      <p id="addError" class="error"></p>
+      <ul id="blocklist" class="chips"></ul>
+    </section>
+
+    <section class="card">
+      <h2>Таймер</h2>
+      <div class="fields">
+        <label>Работа, мин<input id="workMin" type="number" min="1" max="180"></label>
+        <label>Перерыв, мин<input id="breakMin" type="number" min="1" max="60"></label>
+        <label>Длинный перерыв, мин<input id="longBreakMin" type="number" min="1" max="90"></label>
+        <label>Длинный каждые, помидоров<input id="longEvery" type="number" min="1" max="12"></label>
+      </div>
+      <label class="switch"><input id="autoBreak" type="checkbox"><span></span>Начинать перерыв автоматически</label>
+    </section>
+
+    <section class="card">
+      <h2>Расписание</h2>
+      <label class="switch"><input id="schedEnabled" type="checkbox"><span></span>Блокировать в рабочие часы без таймера</label>
+      <div id="days" class="days"></div>
+      <div class="fields two">
+        <label>С<input id="schedStart" type="time"></label>
+        <label>До<input id="schedEnd" type="time"></label>
+      </div>
+      <p id="schedText" class="muted small"></p>
+    </section>
+
+    <section class="card">
+      <h2>Поблажки</h2>
+      <p class="muted small">Кнопка на странице блокировки временно открывает сайт. Лимит обнуляется в полночь.</p>
+      <div class="fields">
+        <label>Минут на поблажку<input id="allowMinutes" type="number" min="1" max="30"></label>
+        <label>Поблажек в день<input id="allowLimit" type="number" min="0" max="20"></label>
+        <label>Минут на один заход (для экономии)<input id="minutesPerDistraction" type="number" min="1" max="60"></label>
+      </div>
+    </section>
+  </main>
+  <footer class="foot muted">Настройки синхронизируются между браузерами через ваш аккаунт.</footer>
+  <script type="module" src="options.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "fokus-tab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Расширение Chrome/Edge: помодоро-таймер и блокировка отвлекающих сайтов",
+  "scripts": {
+    "test": "node --test",
+    "zip": "cd extension && zip -qr ../fokus-tab.zip ."
+  },
+  "license": "MIT"
+}

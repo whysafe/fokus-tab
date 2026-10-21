@@ -1,0 +1,55 @@
+body { width: 340px; padding: 14px 16px 16px; }
+
+.top { display: flex; align-items: center; gap: 10px; }
+.brand { display: flex; align-items: center; gap: 8px; font-size: 15px; margin-right: auto; }
+
+.timer { position: relative; width: 200px; height: 200px; margin: 14px auto 10px; }
+.ring { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring circle { fill: none; stroke-width: 10; }
+.ring-bg { stroke: var(--surface-2); }
+.ring-fg {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  stroke-dasharray: 552.92;
+  stroke-dashoffset: 552.92;
+  transition: stroke-dashoffset .4s linear, stroke .3s;
+}
+body.break .ring-fg { stroke: var(--green); }
+
+.timer-text {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.phase { font-size: 12px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+body.break .phase { color: var(--green); }
+body.idle .phase { color: var(--muted); }
+.clock { font-size: 46px; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: -.02em; line-height: 1.1; }
+.cycle { font-size: 12px; }
+
+.controls { display: flex; gap: 8px; }
+.controls .btn { flex: 1; padding: 0 10px; }
+.controls .wide { flex: 1 1 100%; height: 42px; font-size: 15px; }
+
+.tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 12px 0; }
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 9px 10px;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.tile b { font-size: 15px; line-height: 1.2; overflow-wrap: anywhere; }
+.tile span { font-size: 11px; color: var(--muted); line-height: 1.25; }
+
+.rows { padding: 2px 12px; }
+.row { display: flex; align-items: center; justify-content: space-between; gap: 10px; min-height: 40px; }
+.row + .row { border-top: 1px solid var(--line); }
+.row > span:last-child { text-align: right; }
+.site { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.btn.small { height: 28px; padding: 0 10px; font-size: 12px; flex: none; }

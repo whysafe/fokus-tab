@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <title>Фокус-вкладка</title>
+  <link rel="stylesheet" href="styles/base.css">
+  <link rel="stylesheet" href="styles/popup.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand"><span class="logo"></span><b>Фокус</b></div>
+    <span id="status" class="pill">Выключено</span>
+    <button id="openOptions" class="icon-btn" title="Настройки и статистика" aria-label="Настройки и статистика">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>
+    </button>
+  </header>
+
+  <section class="timer">
+    <svg class="ring" viewBox="0 0 200 200" aria-hidden="true">
+      <circle class="ring-bg" cx="100" cy="100" r="88"/>
+      <circle id="ringFg" class="ring-fg" cx="100" cy="100" r="88"/>
+    </svg>
+    <div class="timer-text">
+      <div id="phase" class="phase">Готов к работе</div>
+      <div id="clock" class="clock">25:00</div>
+      <div id="cycle" class="cycle muted">помидор 1 из 4</div>
+    </div>
+  </section>
+
+  <div class="controls">
+    <button id="start" class="btn btn-primary wide">Начать фокус</button>
+    <button id="pause" class="btn" hidden>Пауза</button>
+    <button id="skip" class="btn" hidden title="Завершить фазу досрочно">Пропустить</button>
+    <button id="stop" class="btn" hidden>Стоп</button>
+  </div>
+
+  <div class="tiles">
+    <div class="tile"><b id="todayFocus">0 мин</b><span>фокус сегодня</span></div>
+    <div class="tile"><b id="todayBlocked">0</b><span>заблокировано</span></div>
+    <div class="tile"><b id="allowLeft">3</b><span>поблажек осталось</span></div>
+  </div>
+
+  <div class="rows card">
+    <div class="row">
+      <span class="muted">Расписание</span>
+      <span id="schedule">выключено</span>
+    </div>
+    <div class="row" id="siteRow" hidden>
+      <span id="siteName" class="site"></span>
+      <button id="addSite" class="btn small">В блок-лист</button>
+    </div>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Фокус-вкладка: демо</title>
+  <link rel="icon" href="../extension/icons/icon32.png">
+  <style>
+    .demo-bar { position: fixed; inset: auto 12px 12px auto; z-index: 10; display: flex; flex-wrap: wrap; gap: 6px; max-width: calc(100% - 24px);
+      font: 13px/1 system-ui, sans-serif; background: rgba(20, 16, 40, .85); padding: 6px; border-radius: 10px; }
+    .demo-bar a { color: #fff; text-decoration: none; padding: 6px 10px; border-radius: 6px; }
+    .demo-bar a[aria-current] { background: #6e56cf; }
+    body.demo-popup { margin: 24px auto; box-shadow: 0 12px 40px rgba(0, 0, 0, .25); border-radius: 14px; overflow: hidden; }
+  </style>
+</head>
+<body>
+  <script type="module">
+    // Loads one of the extension pages (popup, options, blocked) with the chrome.* mock,
+    // so the original HTML, CSS and scripts run unchanged.
+    import { boot, seedDemoData } from './chrome-mock.js';
+
+    const pages = { popup: 'Попап', options: 'Настройки и статистика', blocked: 'Страница блокировки' };
+    const params = new URLSearchParams(location.search);
+    const page = pages[params.get('page')] ? params.get('page') : 'popup';
+
+    const html = await fetch(`../extension/${page}.html`).then((r) => r.text());
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    for (const link of doc.querySelectorAll('link[rel=stylesheet]')) {
+      const el = document.createElement('link');
+      el.rel = 'stylesheet';
+      el.href = `../extension/${link.getAttribute('href')}`;
+      document.head.append(el);
+    }
+    document.title = `${pages[page]} — Фокус-вкладка, демо`;
+    doc.querySelectorAll('script').forEach((s) => s.remove());
+    document.body.insertAdjacentHTML('afterbegin', doc.body.innerHTML);
+    document.body.classList.add(`demo-${page}`);
+
+    const bar = document.createElement('nav');
+    bar.className = 'demo-bar';
+    for (const [key, label] of Object.entries(pages)) {
+      const a = document.createElement('a');
+      a.href = key === 'blocked' ? `?page=blocked&site=youtube.com` : `?page=${key}`;
+      a.textContent = label;
+      if (key === page) a.setAttribute('aria-current', 'page');
+      bar.append(a);
+    }
+    if (!params.has('shot')) document.body.append(bar);
+
+    seedDemoData();
+    await import('../extension/background.js');
+    await boot();
+    if (page === 'blocked') {
+      // The block page reads ?site= from its own URL; start a focus session so it shows a countdown.
+      await chrome.runtime.sendMessage({ type: 'start' });
+    }
+    await import(`../extension/${page}.js`);
+  </script>
+</body>
+</html>

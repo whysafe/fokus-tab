@@ -1,0 +1,37 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node scripts/check-manifest.mjs
+      - run: npm test
+
+  package:
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build zip for the Chrome Web Store
+        run: cd extension && zip -qr ../fokus-tab.zip .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fokus-tab
+          path: fokus-tab.zip
+      - name: Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" fokus-tab.zip --generate-notes
